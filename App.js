@@ -1,6 +1,6 @@
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
-import { Button, TextInput } from 'react-native-web';
+import { StyleSheet, Text, View, Button, TextInput } from 'react-native';
+import TaskCard from './TaskCard';
 
 export default function App() {
   return (
@@ -10,20 +10,32 @@ export default function App() {
         style={styles.input}
         placeholder='Nome da Tarefa' />
 
-      <Text style={styles.label}>Tarefa Descrição</Text>
-      <TextInput style={[styles.input, styles.textArea]} placeholder='Descrição da Tarefa'
+      <Text style={styles.label}>Tarefa descricao</Text>
+      <TextInput
+        style={[styles.input, styles.textArea]}
+        placeholder='descricao da tarefa'
         multiline />
 
-      <view style={styles.buttonContainer}>
-        <Button title='Salvar' 
-        style={styles.buttonColor}
-        color='mediumblue'
-        onPress={
-          () =>{
-            alert('TESTADO')
+      <View style={styles.buttonContainer}>
+        <Button
+          title='Salvar'
+          style={styles.buttonContainer}
+          color='darkgreen'
+          onPress={
+            () => {
+              alert('vq feio')
+            }
           }
-        }/>
-         </view>
+        />
+      </View>
+      <TaskCard
+        title={"Teste"}
+        desc={"descrição teste"}
+        status={"done"}
+        onClick={() => {
+          alert("deletar")
+        }}
+      />
     </View>
   );
 }
@@ -31,33 +43,35 @@ export default function App() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#008B8B',
-    alignItems: 'center',
-    justifyContent: 'top',
+    backgroundColor: 'lightred',
+    padding: 16
   },
   label: {
-    fontSize: 35,
+    fontSize: 16,
     fontWeight: 'bold',
-    alignItems: 'center',
-    justifyContent: 'center',
-    marginBottom: 8
+    margemBottom: 8
+
   },
   input: {
-    borderWidth: 1,
+    borderWitdth: 1,
     borderColor: '#ccc',
     borderRadius: 8,
     padding: 12,
-    fontSize: 18,
-    marginBottom: 16,
-    textAlign: 'center',
+    fontSize: 16,
+    marginBottom: 16
   },
   textArea: {
     height: 100,
-    textAlignVertical: 'top',
+    textAlignVertical: 'top'
   },
+
   buttonContainer: {
     marginTop: 16
   },
-  buttonColor : {
-  },
+  buttonGreen: {
+    backgroundColor: 'darkgreen',
+    borderRadius: 12
+
+  }
 });
+
