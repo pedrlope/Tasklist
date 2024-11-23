@@ -15,7 +15,7 @@ const TaskCard = ({title, desc, status, onClick}) => {
                 style={styles.button}
                 onPress={onClick}>
                 <Text style={styles.buttonText}>
-                    {status === "Done" ? 'Deletar' : 'Check'} </Text>
+                    {status === "Done" ? 'Deletar' : 'Delete'} </Text>
             </TouchableOpacity>
         </View>
     );
