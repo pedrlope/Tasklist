@@ -1,7 +1,8 @@
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View, Button, TextInput, ScrollView } from 'react-native';
 import TaskCard from './TaskCard';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { getRequest } from './api/Api';
 
 export default function App() {
 
@@ -47,14 +48,25 @@ export default function App() {
 
     }
   }
- const deleteTask = (index) => {
-  const updateTask = [...task];
-  updateTask.splice(index, 1)
-  setTask(updateTask)
- }
+  const deleteTask = (index) => {
+    const updateTask = [...task];
+    updateTask.splice(index, 1)
+    setTask(updateTask)
+  }
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
 
+        const resp = await getRequest();
+        setTask(resp)
+      } catch (ex) {
+        console.error(ex)
+      }
+    };
+    fetchData()
+  }, [])
   return (
-  
+
     <View style={styles.container}>
       <Text style={styles.label}>App de Tarefas</Text>
       <TextInput
@@ -62,35 +74,35 @@ export default function App() {
         placeholder="Nome da Tarefa"
         value={taskTitle}
         onChangeText={setTasktitle}
-        />
+      />
 
-{
-      alert1 
-      ?
-      <Text style={styles.errorText}>
-      Necessário informar o título
-      </Text>
-      : <></>
+      {
+        alert1
+          ?
+          <Text style={styles.errorText}>
+            Necessário informar o título
+          </Text>
+          : <></>
       }
 
       <Text style={styles.label}>Tarefa descricao</Text>
       <TextInput
         style={[styles.input, styles.textArea]}
         placeholder="Descricao da tarefa"
-        multiline 
+        multiline
         value={taskDescription}
         onChangeText={setTaskDescription}
-        />
+      />
 
       {
-      alert2 
-      ? <Text style={styles.errorText}>
-      Necessário mínimo 10 caracteres
-      </Text>
-      : <></>
+        alert2
+          ? <Text style={styles.errorText}>
+            Necessário mínimo 10 caracteres
+          </Text>
+          : <></>
       }
 
-       
+
 
       <View style={styles.buttonContainer}>
         <Button
@@ -105,23 +117,24 @@ export default function App() {
         />
       </View>
 
-      {task.length > 0 
-      ? <View style={styles.separator}/>
-      : <></>
-    }
-  
+      {task.length > 0
+        ? <View style={styles.separator} />
+        : <></>
+      }
+
       <ScrollView>
-       {
-         task.map((item, index) =>(
-          <TaskCard
-          title={item.title}
-          desc={item.description}
-          status={"Done"}
-          onClick={() => {
-            deleteTask(index);
-          }}
-        />
-         ))}
+        {
+          task.map((item, index) => (
+            <TaskCard
+            key={item.id}
+              title={item.title}
+              desc={item.description}
+              status={"Done"}
+              onClick={() => {
+                deleteTask(index);
+              }}
+            />
+          ))}
 
       </ScrollView>
     </View>
@@ -162,17 +175,17 @@ const styles = StyleSheet.create({
     borderRadius: 12
 
   },
-   separator:{
+  separator: {
     marginTop: 16,
     width: "100%",
     height: 1,
     backgroundColor: "#222"
-   },
-   errorText:{
+  },
+  errorText: {
     color: "red",
     fontSize: 12,
     fontStyle: "italic"
-    
-   }
+
+  }
 });
 
